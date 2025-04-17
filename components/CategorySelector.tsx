@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Card } from "./ui/card";
+import { Tooltip } from "./ui/tooltip";
 
 const categories = [
   { name: "법률 및 정부", level: "높음", reason: "경쟁이 치열하고, 클릭당 수익이 높아 광고 단가가 높습니다." },
@@ -12,7 +14,7 @@ const categories = [
   { name: "교육", level: "중간", reason: "온라인 교육 수요 증가로 광고 경쟁이 심화되고 있습니다." },
   { name: "자동차 및 차량", level: "중간", reason: "자동차 시장의 경쟁으로 광고 단가가 상승하고 있습니다." },
   { name: "부동산", level: "중간", reason: "부동산 시장의 활발한 거래로 광고 수요가 증가하고 있습니다." },
-  { name: "여행", level: "낮음", reason: "여행 수요 회복으로 광고 경쟁이 증가하고 있습니다." },
+  { name: "여행", level: "낮음", reason: "여행 수요 회복으로 광고 경쟁이 증가하고 있습니다." }
 ];
 
 export default function CategorySelector() {
@@ -27,21 +29,19 @@ export default function CategorySelector() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {categories.map(cat => (
-        <div
-          key={cat.name}
-          onClick={() => toggle(cat.name)}
-          className={`border p-4 rounded-lg shadow cursor-pointer transition-all ${
-            selected.includes(cat.name)
-              ? "bg-blue-100 border-blue-400"
-              : "bg-white"
-          }`}
-        >
-          <div className="font-semibold text-lg">{cat.name}</div>
-          <div className="text-sm text-gray-600">경쟁도: {cat.level}</div>
-          {selected.includes(cat.name) && (
-            <div className="mt-2 text-sm text-gray-700">{cat.reason}</div>
-          )}
-        </div>
+        <Tooltip key={cat.name} content={cat.reason}>
+          <Card
+            onClick={() => toggle(cat.name)}
+            className={`cursor-pointer transition-all ${
+              selected.includes(cat.name)
+                ? "border-blue-500 bg-blue-50 shadow-md"
+                : "hover:border-gray-400"
+            }`}
+          >
+            <div className="font-semibold text-lg">{cat.name}</div>
+            <div className="text-sm text-gray-600">경쟁도: {cat.level}</div>
+          </Card>
+        </Tooltip>
       ))}
     </div>
   );
