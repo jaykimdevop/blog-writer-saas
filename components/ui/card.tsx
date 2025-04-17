@@ -5,13 +5,18 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export function Card({ children, className, ...props }: CardProps) {
-  return (
-    <div
-      className={`rounded-2xl border p-4 shadow-sm bg-white ${className}`}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-}
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rounded-2xl border p-4 shadow-sm bg-white ${className}`}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+
+Card.displayName = "Card";
